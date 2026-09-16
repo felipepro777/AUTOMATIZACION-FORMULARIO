@@ -645,7 +645,8 @@ async function generate(){
     const wb = new ExcelJS.Workbook();
     await wb.xlsx.load(b64ToBytes(TEMPLATE_B64).buffer);
     const ws = wb.getWorksheet('F. Solic.Inscripc. C. de Promot');
-    const set=(a,v)=>{ ws.getCell(a).value=v; };
+    const DATA_FONT={name:'Arial', size:13, color:{argb:'FF000000'}};
+    const set=(a,v)=>{ const c=ws.getCell(a); c.value=v; c.font=DATA_FONT; c.alignment=Object.assign({}, c.alignment||{}, {vertical:'center', wrapText:true}); };
     const appendLabel=(a,v)=>{ const c=ws.getCell(a); const lbl=labelText(c); c.value = lbl + '\n\n' + v; c.alignment = Object.assign({wrapText:true, vertical:'top'}, c.alignment||{}, {wrapText:true, vertical:'top'}); };
 
     // A
